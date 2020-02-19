@@ -1,14 +1,8 @@
 import getopt, glob, sys
 
-from PIL import Image
+import process
 
 SUPPORTED_IMAGE_EXTENSIONS = ["png"]
-
-def processImage(imageFileName):
-    print ("processing file: " + imageFileName)
-
-    image = Image.open(imageFileName)
-    print (image.format, image.size, image.mode)    
 
 def main(imageFolder, maskFile, colorMappingFile, outputFolder):
     print("ImageFolder: " + imageFolder)
@@ -21,8 +15,8 @@ def main(imageFolder, maskFile, colorMappingFile, outputFolder):
     # Pretty sure this doesn't search inside folders too
     for ext in SUPPORTED_IMAGE_EXTENSIONS:
         for fileName in glob.glob(imageFolder + "*." + ext):
-            filesProcessed += 1
-            processImage(fileName)
+            if process.processImage(fileName):
+                filesProcessed += 1
 
     print ("Files Processed: " + str(filesProcessed))
     exit()
