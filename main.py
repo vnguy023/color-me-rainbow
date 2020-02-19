@@ -18,6 +18,7 @@ def main(imageFolder, maskFile, colorMappingFile, outputFolder):
 
     filesProcessed = 0
 
+    # Pretty sure this doesn't search inside folders too
     for ext in SUPPORTED_IMAGE_EXTENSIONS:
         for fileName in glob.glob(imageFolder + "*." + ext):
             filesProcessed += 1
