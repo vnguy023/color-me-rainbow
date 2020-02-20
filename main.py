@@ -3,13 +3,15 @@ import getopt, glob, os, sys
 from PIL import Image
 
 import process
+import ColorScheme
+import Mask
 
 SUPPORTED_IMAGE_EXTENSIONS = ["png"]
 
-def main(imageFolder, maskFile, colorMappingFile, outputFolder):
+def main(imageFolder, maskFileName, colorSchemeFileName, outputFolder):
     print("ImageFolder: " + imageFolder)
-    print("MaskFile: " + maskFile)
-    print("Color Profile" + colorMappingFile)
+    print("MaskFileName: " + maskFileName)
+    print("ColorSchemeFileName" + colorSchemeFileName)
     print("Output Folder: " + outputFolder)
 
     filesProcessed = 0
@@ -21,6 +23,14 @@ def main(imageFolder, maskFile, colorMappingFile, outputFolder):
     else:
         print ("Created Output Folder")
 
+    mask = process.parseMask(maskFileName)
+    colorSchemes = process.parseColorSchemes(colorSchemeFileName)
+
+    for colorScheme in colorSchemes:
+        if colorScheme.canUseMask(mask) == False:
+            print("[Error=ColorScheme can't use mask] [colorScheme=" + colorScheme.name + "]")
+            exit()
+
     # Pretty sure this doesn't search inside folders too
     for ext in SUPPORTED_IMAGE_EXTENSIONS:
         for fileName in glob.glob(imageFolder + "*." + ext):
@@ -28,16 +38,20 @@ def main(imageFolder, maskFile, colorMappingFile, outputFolder):
             
             baseFileName = os.path.splitext(os.path.basename(fileName))[0]
             image = Image.open(fileName)
-            hsvImage = image.convert("HSV")
+            #hsvImage = image.convert("HSV")
+            rgbaImage = image.convert("RGBA")
 
-            print ("Unique Colors (HSV):")
-            print(process.getColors(hsvImage))
-            process.processImageHSV(hsvImage)
+            print ("GetColors: mode=" + rgbaImage.mode)
+            print (process.getColors(rgbaImage))
+            
+            for colorScheme in colorSchemes:
+                result = process.processImageRGBA(rgbaImage, mask, colorScheme)
 
-            print ("Saving: "+ baseFileName + ".png")
-            savePath = outputFolder + baseFileName + ".png"
+                saveFileName = baseFileName + "_" + colorScheme.name
+                savePath = outputFolder + saveFileName + ".png"
 
-            image.save(savePath)
+                print ("Saving: " + saveFileName + ".png")
+                result.save(savePath)
 
     print ("Files Processed: " + str(filesProcessed))
     exit()
