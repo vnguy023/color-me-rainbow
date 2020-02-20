@@ -2,27 +2,24 @@ import Mask
 import Pixel
 
 class ColorScheme:
-    __labelPixelDict = dict()
-
     def __init__(self, name: str):
         self.name = name
+        self.__labelPixelDict = dict()
 
     def canUseMask(self, mask: Mask):
         for label in mask.getLabels():
-            if self.__labelPixelDict.get(label) != 1:
+            if label not in self.__labelPixelDict:
                 return False
         return True
 
     def addLabelPixel(self, label: str, pixel: Pixel):
         self.__labelPixelDict[label] = pixel
 
+    # assume we validated mask already checked on this
     def getPixel(self, label: str):
-        if label in self.__labelPixelDict.keys():
+        if label in self.__labelPixelDict:
             return self.__labelPixelDict[label]
-        else:
-            if label != "":
-                print ("[ColorScheme::getPixel()] [Error=label does not exist] [label=" + label + "]")
-            return False
+        return Pixel.Pixel(255,0,255,"RGB")
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):

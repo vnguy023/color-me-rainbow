@@ -1,16 +1,13 @@
 class Pixel:
-    mode: str = "RGB"
-    #converted: bool = false
-
-    r: int = 0
-    g: int = 0
-    b: int = 0
-
-    h: int = 0
-    s: int = 0
-    v: int = 0
-
     def __init__(self, v1: int, v2: int, v3: int, mode: str):
+        self.r = 0
+        self.g = 0
+        self.b = 0
+        
+        self.h = 0
+        self.s = 0
+        self.v = 0
+
         if mode == "RGB":
             self.mode = "RGB"
             self.r = v1
@@ -21,6 +18,8 @@ class Pixel:
             self.h = v1
             self.s = v2
             self.v = v3
+
+            
 
     def __hash__(self):
         return hash((self.r, self.g, self.b, self.h, self.s, self.v))
@@ -33,9 +32,8 @@ class Pixel:
             elif (self.mode == "HSV"
                 and self.h == other.h and self.s == other.s and self.v == other.v):
                 return True
-            return False
-        else:
-            return False
+
+        return False
 
     def __ne__(self, other):
         if self == other:

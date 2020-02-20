@@ -1,7 +1,8 @@
 import Pixel
 
 class Mask:
-    __pixelLabelDict = dict()
+    def __init__(self):
+        self.__pixelLabelDict = dict()
 
     def addPixelLabel(self, label: str, pixel: Pixel):
         self.__pixelLabelDict[pixel] = label

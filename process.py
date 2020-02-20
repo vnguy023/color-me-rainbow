@@ -8,43 +8,38 @@ import Pixel
 
 def parseMask(fileName):
     df = pandas.read_csv(fileName, usecols = ["label", "r", "g", "b"], dtype = {"label": "str", "r": "int", "g": "int", "b": "int"})
-    
     numRows = len(df)
     
     mask = Mask.Mask()
 
     for index in range(numRows):
-        mask.addPixelLabel(df.iloc[index]['label'], Pixel.Pixel(df.iloc[index]['r'], df.iloc[index]['g'], df.iloc[index]['b'], "RGB"))
+        pixel = Pixel.Pixel(df.iloc[index]['r'], df.iloc[index]['g'], df.iloc[index]['b'], "RGB")
+        mask.addPixelLabel(df.iloc[index]['label'], pixel)
 
     return mask
 
 def parseColorSchemes(fileName):
-    colorSchemes = []
-    colorSchemes.append(__parseColorScheme())
-    return colorSchemes
+    df = pandas.read_csv(fileName, usecols = ["schemeLabel", "maskLabel", "r", "g", "b"], dtype = {"schemeLabel": "str", "maskLabel": "str", "r": "int", "g": "int", "b": "int"})
+    numRows = len(df)
 
-def __parseColorScheme():
-    return ColorScheme.ColorScheme("default")
+    myDict = dict()
+    for index in range(numRows):
+        schemeLabel = df.iloc[index]['schemeLabel']
+        maskLabel = df.iloc[index]['maskLabel']
+        pixel = Pixel.Pixel(df.iloc[index]['r'], df.iloc[index]['g'], df.iloc[index]['b'], "RGB")
+
+        if schemeLabel not in myDict.keys():
+            myDict[schemeLabel] = ColorScheme.ColorScheme(schemeLabel)            
+        myDict[schemeLabel].addLabelPixel(maskLabel, pixel)
+
+    colorSchemes = []
+    for value in myDict.values():
+        colorSchemes.append(value)    
+    return colorSchemes 
 
 #png format doesn't support HSV w/o conversion~
 def processImageHSV(image: Image, mask: Mask, colorScheme: ColorScheme):
-    result = Image.new("HSV",image.size)
-    print (image.format, image.size, "HSV")
-
-    for x in range(image.size[0]):
-        for y in range(image.size[1]):
-            p = image.getpixel((x,y))
-            p_h, p_s, p_v = p
-            pixel = Pixel.Pixel(p_h, p_s, p_v, "HSV")
-            
-            pixelLabel = mask.getLabel(pixel)
-            tPixel = colorScheme.getPixel(pixelLabel)
-            if pixelLabel != "" and tPixel != False:
-                result.putpixel( (x,y), (tPixel.h, tPixel.s, tPixel.v))
-            else: # if it doesn't map to any known values
-                result.putpixel( (x,y), p)
-
-    return result
+    pass
 
 def processImageRGB(image: Image, mask: Mask, colorScheme: ColorScheme):
     pass
@@ -60,8 +55,8 @@ def processImageRGBA(image: Image, mask: Mask, colorScheme: ColorScheme):
             
             pixelLabel = mask.getLabel(pixel)
             tPixel = colorScheme.getPixel(pixelLabel)
-            if pixelLabel != "" and tPixel != False:
-                result.putpixel( (x,y), (tPixel.r, tPixel.g, tPixel.b), p_a)
+            if pixelLabel != "":
+                result.putpixel( (x,y), (tPixel.r, tPixel.g, tPixel.b, p_a))
             else: # if it doesn't map to any known values
                 result.putpixel( (x,y), p)
 
