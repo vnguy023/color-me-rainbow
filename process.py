@@ -1,4 +1,4 @@
-import json
+import pandas
 
 from PIL import Image
 
@@ -7,7 +7,15 @@ import Mask
 import Pixel
 
 def parseMask(fileName):
+    df = pandas.read_csv(fileName, usecols = ["label", "r", "g", "b"], dtype = {"label": "str", "r": "int", "g": "int", "b": "int"})
+    
+    numRows = len(df)
+    
     mask = Mask.Mask()
+
+    for index in range(numRows):
+        mask.addPixelLabel(df.iloc[index]['label'], Pixel.Pixel(df.iloc[index]['r'], df.iloc[index]['g'], df.iloc[index]['b'], "RGB"))
+
     return mask
 
 def parseColorSchemes(fileName):

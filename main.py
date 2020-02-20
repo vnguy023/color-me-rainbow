@@ -60,10 +60,10 @@ numArgs = len(sys.argv) - 1
 
 # This parses arugments to make sure it's valid
 if numArgs == 2:
-    main(sys.argv[1], sys.argv[2], "./colorProfiles/edg32.colorProfile", "./output/")
+    main(sys.argv[1], sys.argv[2], "./colorSchemes/edg32.csv", "./output/")
 elif numArgs == 0:
-    main("./images/", "mask.mask", "./colorProfiles/edg32.colorProfile", "./output/")
+    main("./images/", "./masks/sampleMaskRGB.csv", "./colorSchemes/edg32.csv", "./output/")
 else:
-    print("Format <imageFolder> <maskFile> <colorProfile> <outputFolder>")
+    print("Format <imageFolder> <maskFileName> <colorSchemeFileName> <outputFolder>")
     exit()
     

@@ -3,8 +3,8 @@ import Pixel
 class Mask:
     __pixelLabelDict = dict()
 
-    def addPixelLabel(self, pixel: Pixel, label: str):
-        self.__pixelLabelDict[pixel] == label
+    def addPixelLabel(self, label: str, pixel: Pixel):
+        self.__pixelLabelDict[pixel] = label
 
     def getLabel(self, pixel: Pixel):
         if pixel in self.__pixelLabelDict.keys():
