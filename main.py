@@ -28,7 +28,7 @@ def main(imageFolder, maskFileName, colorSchemeFileName, outputFolder):
 
     for colorScheme in colorSchemes:
         if colorScheme.canUseMask(mask) == False:
-            print("[Error=ColorScheme can't use mask] [colorScheme=" + colorScheme.name + "]")
+            print("[Error=ColorScheme can't use mask because all labels don't map to something] [colorScheme=" + colorScheme.name + "]")
             exit()
 
     # Pretty sure this doesn't search inside folders too
