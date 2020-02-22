@@ -59,10 +59,10 @@ def main(imageFolder, maskFileName, colorSchemeFileName, outputFolder):
 numArgs = len(sys.argv) - 1
 
 # This parses arugments to make sure it's valid
-if numArgs == 2:
-    main(sys.argv[1], sys.argv[2], "./colorSchemes/edg32.csv", "./output/")
+if numArgs == 4:
+    main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
 elif numArgs == 0:
-    main("./images/", "./masks/sampleMaskRGB.csv", "./colorSchemes/edg32.csv", "./output/")
+    main("./images/", "./masks/ramp4RGB.mask", "./colorSchemes/edg32-ramp4RGB.colorscheme", "./output/")
 else:
     print("Format <imageFolder> <maskFileName> <colorSchemeFileName> <outputFolder>")
     exit()

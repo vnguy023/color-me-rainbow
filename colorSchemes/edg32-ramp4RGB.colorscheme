@@ -1,0 +1,17 @@
+schemeLabel,maskLabel,r,g,b
+red,highlight,246,117,122
+red,halftone,228,59,68
+red,coreshadow,162,38,51
+red,shadow,62,39,49
+brown,highlight,184,111,80
+brown,halftone,115,62,57
+brown,coreshadow,62,39,49
+brown,shadow,24,20,37
+green,highlight,99,199,77
+green,halftone,62,137,72
+green,coreshadow,38,92,66
+green,shadow,25,60,62
+blue,highlight,44,232,245
+blue,halftone,0,153,219
+blue,coreshadow,58,68,102
+blue,shadow,38,43,68

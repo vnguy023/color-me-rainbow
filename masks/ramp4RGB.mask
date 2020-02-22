@@ -1,0 +1,5 @@
+label,r,g,b
+highlight,226,223,177
+halftone,176,184,127
+coreshadow,115,130,92
+shadow,68,68,41
