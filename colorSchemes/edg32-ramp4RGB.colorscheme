@@ -11,6 +11,14 @@ pink1,highlight,232,183,150
 pink1,halftone,246,117,122
 pink1,coreshadow,255,0,68
 pink1,shadow,162,38,51
+purple,highlight,181,80,136
+purple,halftone,104,56,108
+purple,coreshadow,38,43,68
+purple,shadow,24,20,37
+violet,highlight,246,117,122
+violet,halftone,181,80,136
+violet,coreshadow,104,56,108
+violet,shadow,38,43,68
 green,highlight,99,199,77
 green,halftone,62,137,72
 green,coreshadow,38,92,66
