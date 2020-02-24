@@ -43,12 +43,20 @@ def main(imageFolder, maskFileName, colorSchemeFileName, outputFolder):
 
             print ("GetColors: mode=" + rgbaImage.mode)
             print (process.getColors(rgbaImage))
+
+            saveFileFolder = outputFolder + "/" + baseFileName + "/"
+            try:
+                os.makedirs(saveFileFolder)
+            except OSError:
+                print ("Folder already exists. Adding/overwriting data")
+            else:
+                print ("Created Output Folder")
             
             for colorScheme in colorSchemes:
                 result = process.processImageRGBA(rgbaImage, mask, colorScheme)
 
                 saveFileName = baseFileName + "_" + colorScheme.name
-                savePath = outputFolder + saveFileName + ".png"
+                savePath = saveFileFolder + saveFileName + ".png"
 
                 print ("Saving: " + saveFileName + ".png")
                 result.save(savePath)
