@@ -11,7 +11,7 @@ SUPPORTED_IMAGE_EXTENSIONS = ["png"]
 def main(imageFolder, maskFileName, colorSchemeFileName, outputFolder):
     print("ImageFolder: " + imageFolder)
     print("MaskFileName: " + maskFileName)
-    print("ColorSchemeFileName" + colorSchemeFileName)
+    print("ColorSchemeFileName:" + colorSchemeFileName)
     print("Output Folder: " + outputFolder)
 
     filesProcessed = 0
